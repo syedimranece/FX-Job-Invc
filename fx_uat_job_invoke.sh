@@ -15,3 +15,5 @@ echo "region=${REGION}"
 echo "jobid=${FX_JOBID}"
 
 curl -k --header "Content-Type: application/json;charset=UTF-8" -X POST -u "${FX_USER}":"${FX_PWD}" http://localhost:8080/api/v1/runs/job/"${FX_JOBID}"?region="${REGION}"&tags="${TAGS}"&suites="${SUITES}"&categories="${CATEGORIES}"
+
+Exit code 0
