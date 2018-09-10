@@ -14,6 +14,6 @@ echo "user=${FX_USER}"
 echo "region=${REGION}"
 echo "jobid=${FX_JOBID}"
 
-curl -k --header "Content-Type: application/json;charset=UTF-8" -X POST -d '{}' -u "${FX_USER}":"${FX_PWD}" http://localhost:8080/api/v1/runs/job/"${FX_JOBID}"?region="${REGION}"&tags="${TAGS}"&suites="${SUITES}"&categories="${CATEGORIES}"
+curl -k --header "Content-Type: application/json;charset=UTF-8" -X POST -d '{}' -u "${FX_USER}":"${FX_PWD}" http://13.56.210.25/api/v1/runs/job/"${FX_JOBID}"?region="${REGION}"&tags="${TAGS}"&suites="${SUITES}"&categories="${CATEGORIES}"
 
 Exit code 0
