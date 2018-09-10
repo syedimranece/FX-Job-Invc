@@ -14,6 +14,10 @@ echo "user=${FX_USER}"
 echo "region=${REGION}"
 echo "jobid=${FX_JOBID}"
 
-curl -k --header "Content-Type: application/json;charset=UTF-8" -X POST -d '{}' -u "${FX_USER}":"${FX_PWD}" http://localhost:8080/api/v1/runs/job/"${FX_JOBID}"
+#curl -k --header "Content-Type: application/json;charset=UTF-8" -X POST -d '{}' -u "${FX_USER}":"${FX_PWD}" http://localhost:8080/api/v1/runs/job/"${FX_JOBID}"
 
-Exit code 0
+response=$(curl -k --header "Content-Type: application/json;charset=UTF-8" -X POST -d '{}' -w "%{http_code}\n" -u FXLabs//admin@fxlabs.io:admin123$ http://13.56.210.25/api/v1/runs/job/8a80802665c150160165c1779b343761)
+if [ "$response" == "200" ]
+then
+ exit 1
+fi
