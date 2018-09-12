@@ -14,4 +14,10 @@ echo "user=${FX_USER}"
 echo "region=${REGION}"
 echo "jobid=${FX_JOBID}"
 
-curl --header "Content-Type: application/json;charset=UTF-8" -X POST -u "${FX_USER}":"${FX_PWD}" https://cloud.fxlabs.io/api/v1/runs/job/"${FX_JOBID}"?region="${REGION}"&tags="${TAGS}"&suites="${SUITES}"&categories="${CATEGORIES}"
+#curl -k --header "Content-Type: application/json;charset=UTF-8" -X POST -d '{}' -u "${FX_USER}":"${FX_PWD}" http://localhost:8080/api/v1/runs/job/"${FX_JOBID}"
+
+response=$(curl -k --header "Content-Type: application/json;charset=UTF-8" -X POST -d '{}' -w "%{http_code}\n" -u "${FX_USER}":"${FX_PWD}"  https://cloud.fxlabs.io/api/v1/runs/job/"${FX_JOBID}")
+if [ "$response" == "" ]
+then
+ exit 1
+fi
