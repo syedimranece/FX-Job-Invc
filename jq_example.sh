@@ -16,3 +16,20 @@ echo "jobid=${FX_JOBID}"
 
 
 runId=$(curl -k --header "Content-Type: application/json;charset=UTF-8" -X POST -d '{}' -u "shoukath@fxlabs.io":"shoukath@fxlabs.io"  https://cloud.fxlabs.io/api/v1/runs/job/8a8081e565b474b10165b4c24d1b1adf | jq -r '.["data"]|.id')
+
+
+status=$(curl -k --header "Content-Type: application/json;charset=UTF-8" -X GET -u "shoukath@fxlabs.io":"shoukath@fxlabs.io"  https://cloud.fxlabs.io/api/v1/runs/${runId} | jq -r '.["data"]|.task.status')
+
+while [ ("${status}" = "WAITING") || ("${status}"="PROCESSING") ]
+	 do
+		sleep 10
+	status=$(curl -k --header "Content-Type: application/json;charset=UTF-8" -X GET -u "shoukath@fxlabs.io":"shoukath@fxlabs.io"  https://cloud.fxlabs.io/api/v1/runs/${runId} | jq -r '.["data"]|.task.status')
+		echo ${status}
+	done
+
+if (${status} = "TIMEOUT") 
+then
+ exit 1
+else
+ exit 0
+
