@@ -24,16 +24,14 @@ then
 fi
 
 
-status=$(curl -k --header "Content-Type: application/json;charset=UTF-8" -X GET -u "shoukath@fxlabs.io":"shoukath@fxlabs.io"  https://cloud.fxlabs.io/api/v1/runs/${runId} | jq -r '.["data"]|.task.status')
-
-
-echo "status = " $status
+status="WAITING"
+echo "status = " "WAITING"
 
 
 while [ "$status" = "WAITING"  -o  "$status" = "PROCESSING" ]
 	 do
 		sleep 10
-	status=$(curl -k --header "Content-Type: application/json;charset=UTF-8" -X GET -u "shoukath@fxlabs.io":"shoukath@fxlabs.io"  https://cloud.fxlabs.io/api/v1/runs/${runId} | jq -r '.["data"]|.task.status')
+	status=$(curl -k --header "Content-Type: application/json;charset=UTF-8" -X GET -u "${FX_USER}":"${FX_PWD}"  https://cloud.fxlabs.io/api/v1/runs/${runId} | jq -r '.["data"]|.task.status')
 		
 		echo "status = " $status
 
@@ -51,3 +49,18 @@ then
 else
  exit 0
 fi
+
+return 0
+
+
+
+
+
+
+
+
+
+
+
+
+
