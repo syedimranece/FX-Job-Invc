@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # Begin
 
 FX_USER=$1
@@ -15,7 +15,7 @@ echo "region=${REGION}"
 echo "jobid=${FX_JOBID}"
 
 
-runId=$(curl -k --header "Content-Type: application/json;charset=UTF-8" -X POST -d '{}' -u "shoukath@fxlabs.io":"shoukath@fxlabs.io"  https://cloud.fxlabs.io/api/v1/runs/job/8a8081e565b474b10165b4c24d1b1adf | jq -r '.["data"]|.id')
+runId=$(curl -k --header "Content-Type: application/json;charset=UTF-8" -X POST -d '{}' -u "${FX_USER}":"${FX_PWD}"  https://cloud.fxlabs.io/api/v1/runs/job/${FX_JOBID}?region=${REGION} | jq -r '.["data"]|.id')
 
 if [ -z "$runId" ]
 then
@@ -37,31 +37,17 @@ while [ "$status" = "WAITING"  -o  "$status" = "PROCESSING" ]
 		
 		echo "status = " $status
 
-		if ("$status" -eq "COMPLETED") 
-                  then
+		if [ $status = "COMPLETED" ];then
+                  
                 	echo "Job run successfully completed"
                         exit 0
+
                 fi
 	done
 
-if ("$status" -eq "TIMEOUT") 
+if [ $status = "TIMEOUT" ] 
 then
  exit 1
 else
  exit 0
 fi
-
-return 0
-
-
-
-
-
-
-
-
-
-
-
-
-
