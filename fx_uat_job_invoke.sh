@@ -15,7 +15,7 @@ echo "region=${REGION}"
 echo "jobid=${FX_JOBID}"
 
 
-runId=$(curl -k --header "Content-Type: application/json;charset=UTF-8" -X POST -d '{}' -u "${FX_USER}":"${FX_PWD}"  https://cloud.fxlabs.io/api/v1/runs/job/${FX_JOBID}?region=${REGION} | jq -r '.["data"]|.id')
+runId=$(curl -k --header "Content-Type: application/json;charset=UTF-8" -X POST -d '{}' -u "${FX_USER}":"${FX_PWD}" http://13.56.210.25/api/v1/runs/job/${FX_JOBID}?region=${REGION} | jq -r '.["data"]|.id')
 
 echo "runId =" $runId
 if [ -z "$runId" ]
@@ -35,19 +35,24 @@ while [ "$taskStatus" == "WAITING" -o "$taskStatus" == "PROCESSING" ]
 	 do
 		sleep 5
 		 echo "Checking Status...."
-		  taskStatus=$(curl -k --header "Content-Type: application/json;charset=UTF-8" -X GET -u "${FX_USER}":"${FX_PWD}"  https://cloud.fxlabs.io/api/v1/runs/${runId} | jq -r '.["data"]|.task.status')
-		
-		#echo "temp response = " $runResponse
-		#runResponse_=$runResponse
-		
-		#jq -n --argjson data "$runResponse" '$data.data.task.status'
+
+		passPercent=$(curl -k --header "Content-Type: application/json;charset=UTF-8" -X GET -u "${FX_USER}":"${FX_PWD}" http://13.56.210.25/api/v1/runs/${runId} | jq -r '.["data"]|.ciCdStatus') 
+                        
+			IFS=':' read -r -a array <<< "$passPercent"
+			
+			taskStatus="${array[0]}"			
+
+			echo "Status =" "${array[0]}"
+			echo "Success Percent =" "${array[1]}"
+
+			echo "Total Tests =" "${array[2]}"	
+			echo "Time Taken =" "${array[3]}"
                
 				
 		echo "taskStatus = " $taskStatus
 
 		if [ "$taskStatus" == "COMPLETED" ];then
-                  	 passPercent=$(curl -k --header "Content-Type: application/json;charset=UTF-8" -X GET -u "${FX_USER}":"${FX_PWD}"  https://cloud.fxlabs.io/api/v1/runs/${runId} | jq -r '.["data"]|.task.totalTests') 
-			echo "TotalTest =" "$passPercent"
+                  	 
                         
                 	echo "Job run successfully completed"
                         exit 0
