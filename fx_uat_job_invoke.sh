@@ -14,6 +14,7 @@ echo "user=${FX_USER}"
 echo "region=${REGION}"
 echo "jobid=${FX_JOBID}"
 
+apt-get install jq
 
 runId=$(curl -k --header "Content-Type: application/json;charset=UTF-8" -X POST -d '{}' -u "${FX_USER}":"${FX_PWD}" http://13.56.210.25/api/v1/runs/job/${FX_JOBID}?region=${REGION} | jq -r '.["data"]|.id')
 
