@@ -43,7 +43,7 @@ while [ "$taskStatus" == "WAITING" -o "$taskStatus" == "PROCESSING" ]
 			
 			taskStatus="${array[0]}"			
 
-			echo "Status =" "${array[0]}" " Success Percent =" "${array[1]}"  " Total Tests =" "${array[2]}" " Time Taken =" "${array[3]}" " Run =" "${array[4]}"
+			echo "Status =" "${array[0]}" " Success Percent =" "${array[1]}"  " Total Tests =" "${array[2]}" " Time Taken =" "${array[4]}" " Run =" "${array[5]}"
 			
 				
 		echo "taskStatus = " $taskStatus
