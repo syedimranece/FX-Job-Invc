@@ -62,7 +62,7 @@ echo "Task Status = " $taskStatus
  exit 1
 fi
 
-echo $(curl -k --header "Content-Type: application/json;charset=UTF-8" -X GET -u "${FX_USER}":"${FX_PWD}" http://13.56.210.25/api/v1/runs/${runId} | jq -r '.["data"]|.ciCdStatus')
+echo $(curl -k --header "Content-Type: application/json;charset=UTF-8" -X GET -u "${FX_USER}":"${FX_PWD}" https://cloud.fxlabs.io/api/v1/runs/${runId} | jq -r '.["data"]|.ciCdStatus')
 exit1
 
 return 0
