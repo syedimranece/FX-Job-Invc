@@ -43,7 +43,7 @@ while [ "$taskStatus" == "WAITING" -o "$taskStatus" == "PROCESSING" ]
 			
 			taskStatus="${array[0]}"			
 
-			echo "Status =" "${array[0]}" " Success Percent =" "${array[1]}"  " Total Tests =" "${array[2]}" " Time Taken =" "${array[3]}"
+			echo "Status =" "${array[0]}" " Success Percent =" "${array[1]}"  " Total Tests =" "${array[2]}" " Time Taken =" "${array[3]}" " Run =" "${array[4]}"
 			
 				
 		echo "taskStatus = " $taskStatus
@@ -58,10 +58,12 @@ while [ "$taskStatus" == "WAITING" -o "$taskStatus" == "PROCESSING" ]
 	done
 
 if [ "$taskStatus" == "TIMEOUT" ];then 
+echo "Task Status = " $taskStatus
  exit 1
-else
- exit 0
 fi
+
+echo $(curl -k --header "Content-Type: application/json;charset=UTF-8" -X GET -u "${FX_USER}":"${FX_PWD}" http://13.56.210.25/api/v1/runs/${runId} | jq -r '.["data"]|.ciCdStatus')
+exit1
 
 return 0
 
