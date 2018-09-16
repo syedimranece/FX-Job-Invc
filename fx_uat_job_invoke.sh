@@ -22,6 +22,7 @@ if [ -z "$runId" ]
 then
 	  echo "RunId = " "$runId"
           echo "Invalid runid"
+	  echo $(curl -k --header "Content-Type: application/json;charset=UTF-8" -X POST -d '{}' -u "${FX_USER}":"${FX_PWD}" http://13.56.210.25/api/v1/runs/job/${FX_JOBID}?region=${REGION})
           exit 1
 fi
 
@@ -42,12 +43,8 @@ while [ "$taskStatus" == "WAITING" -o "$taskStatus" == "PROCESSING" ]
 			
 			taskStatus="${array[0]}"			
 
-			echo "Status =" "${array[0]}"
-			echo "Success Percent =" "${array[1]}"
-
-			echo "Total Tests =" "${array[2]}"	
-			echo "Time Taken =" "${array[3]}"
-               
+			echo "Status =" "${array[0]}" " Success Percent =" "${array[1]}"  " Total Tests =" "${array[2]}" " Time Taken =" "${array[3]}"
+			
 				
 		echo "taskStatus = " $taskStatus
 
