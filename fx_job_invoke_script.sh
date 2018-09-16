@@ -15,14 +15,14 @@ echo "region=${REGION}"
 echo "jobid=${FX_JOBID}"
 
 
-runId=$(curl -k --header "Content-Type: application/json;charset=UTF-8" -X POST -d '{}' -u "${FX_USER}":"${FX_PWD}" https://cloud.fxlabs.io/api/v1/runs/job/${FX_JOBID}?region=${REGION} | jq -r '.["data"]|.id')
+runId=$(curl -k --header "Content-Type: application/json;charset=UTF-8" -X POST -d '{}' -u "${FX_USER}":"${FX_PWD}" http://13.56.210.25/api/v1/runs/job/${FX_JOBID}?region=${REGION} | jq -r '.["data"]|.id')
 
 echo "runId =" $runId
 if [ -z "$runId" ]
 then
 	  echo "RunId = " "$runId"
           echo "Invalid runid"
-	  echo $(curl -k --header "Content-Type: application/json;charset=UTF-8" -X POST -d '{}' -u "${FX_USER}":"${FX_PWD}" https://cloud.fxlabs.io/api/v1/runs/job/${FX_JOBID}?region=${REGION})
+	  echo $(curl -k --header "Content-Type: application/json;charset=UTF-8" -X POST -d '{}' -u "${FX_USER}":"${FX_PWD}" http://13.56.210.25/api/v1/runs/job/${FX_JOBID}?region=${REGION})
           exit 1
 fi
 
@@ -37,13 +37,13 @@ while [ "$taskStatus" == "WAITING" -o "$taskStatus" == "PROCESSING" ]
 		sleep 5
 		 echo "Checking Status...."
 
-		passPercent=$(curl -k --header "Content-Type: application/json;charset=UTF-8" -X GET -u "${FX_USER}":"${FX_PWD}" https://cloud.fxlabs.io/api/v1/runs/${runId} | jq -r '.["data"]|.ciCdStatus') 
+		passPercent=$(curl -k --header "Content-Type: application/json;charset=UTF-8" -X GET -u "${FX_USER}":"${FX_PWD}" http://13.56.210.25/api/v1/runs/${runId} | jq -r '.["data"]|.ciCdStatus') 
                         
 			IFS=':' read -r -a array <<< "$passPercent"
 			
 			taskStatus="${array[0]}"			
 
-			echo "Status =" "${array[0]}" " Success Percent =" "${array[1]}"  " Total Tests =" "${array[2]}" " Time Taken =" "${array[3]}" " Run =" "${array[4]}"
+			echo "Status =" "${array[0]}" " Success Percent =" "${array[1]}"  " Total Tests =" "${array[2]}" " Time Taken =" "${array[4]}" " Run =" "${array[5]}"
 			
 				
 		echo "taskStatus = " $taskStatus
@@ -62,7 +62,7 @@ echo "Task Status = " $taskStatus
  exit 1
 fi
 
-echo $(curl -k --header "Content-Type: application/json;charset=UTF-8" -X GET -u "${FX_USER}":"${FX_PWD}" https://cloud.fxlabs.io/api/v1/runs/${runId} | jq -r '.["data"]|.ciCdStatus')
+echo $(curl -k --header "Content-Type: application/json;charset=UTF-8" -X GET -u "${FX_USER}":"${FX_PWD}" http://13.56.210.25/api/v1/runs/${runId} | jq -r '.["data"]|.ciCdStatus')
 exit1
 
 return 0
