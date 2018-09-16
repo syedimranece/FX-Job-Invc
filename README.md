@@ -1,4 +1,3 @@
 # FX-Job-Invc
 
-sudo wget https://raw.githubusercontent.com/shoukathmd/FX-Job-Invc/master/fx_job_invoke_script.sh -O fx_job_invoke_script.sh
-sudo bash fx_job_invoke_script.sh shoukath@fxlabs.io shoukath@fxlabs.io 8a8081de6580793901658081974e0004
+wget https://raw.githubusercontent.com/shoukathmd/FX-Job-Invc/master/fx_uat_job_invoke.sh -O fx_job_invoke_script.sh;bash fx_job_invoke_script.sh shoukathmd@gmail.com admin12#$ 8a8080cf65e02c0f0165e0440b3a0d03
