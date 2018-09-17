@@ -46,10 +46,11 @@ while [ "$taskStatus" == "WAITING" -o "$taskStatus" == "PROCESSING" ]
 			echo "Status =" "${array[0]}" " Success Percent =" "${array[1]}"  " Total Tests =" "${array[2]}" " Time Taken =" "${array[4]}" " Run =" "${array[5]}"
 			
 				
-		echo "taskStatus = " $taskStatus
 
 		if [ "$taskStatus" == "COMPLETED" ];then
                   	 
+			echo  "Run detail link http://13.56.210.25"${array[6]}
+			echo  "${array[7]}"
                         
                 	echo "Job run successfully completed"
                         exit 0
@@ -62,7 +63,7 @@ echo "Task Status = " $taskStatus
  exit 1
 fi
 
-echo $(curl -k --header "Content-Type: application/json;charset=UTF-8" -X GET -u "${FX_USER}":"${FX_PWD}" http://13.56.210.25/api/v1/runs/${runId} | jq -r '.["data"]|.ciCdStatus')
+echo $(curl -k --header "Content-Type: application/json;charset=UTF-8" -X GET -u "${FX_USER}":"${FX_PWD}" http://13.56.210.25/api/v1/runs/${runId})
 exit1
 
 return 0
