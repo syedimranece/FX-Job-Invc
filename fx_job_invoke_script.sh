@@ -55,7 +55,7 @@ while [ "$taskStatus" == "WAITING" -o "$taskStatus" == "PROCESSING" ]
 			echo  "${array[7]}"
 			echo "------------------------------------------------"
                         
-                	echo "Job run successfully completed"
+                	echo  "Job run successfully completed"
                         exit 0
 
                 fi
