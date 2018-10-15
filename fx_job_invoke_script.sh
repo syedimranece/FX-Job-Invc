@@ -23,7 +23,7 @@ then
 	  echo "RunId = " "$runId"
           echo "Invalid runid"
 	  echo $(curl -k --header "Content-Type: application/json;charset=UTF-8" -X POST -d '{}' -u "${FX_USER}":"${FX_PWD}" https://cloud.fxlabs.io/api/v1/runs/job/${FX_JOBID}?region=${REGION})
-          exit 0
+          exit 1
 fi
 
 
@@ -56,18 +56,18 @@ while [ "$taskStatus" == "WAITING" -o "$taskStatus" == "PROCESSING" ]
 			echo "------------------------------------------------"
                         
                 	echo "Job run successfully completed"
-                        exit 0
+                        exit 1
 
                 fi
 	done
 
 if [ "$taskStatus" == "TIMEOUT" ];then 
 echo "Task Status = " $taskStatus
- exit 0
+ exit 1
 fi
 
 echo $(curl -k --header "Content-Type: application/json;charset=UTF-8" -X GET -u "${FX_USER}":"${FX_PWD}" https://cloud.fxlabs.io/api/v1/runs/${runId})
-exit 0
+exit 1
 
 return 0
 
