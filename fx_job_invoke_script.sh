@@ -67,7 +67,7 @@ echo "Task Status = " $taskStatus
 fi
 
 echo $(curl -k --header "Content-Type: application/json;charset=UTF-8" -X GET -u "${FX_USER}":"${FX_PWD}" https://cloud.fxlabs.io/api/v1/runs/${runId})
-exit 1
+exit 0
 
 return 0
 
