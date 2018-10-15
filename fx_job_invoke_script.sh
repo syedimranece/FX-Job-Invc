@@ -56,7 +56,7 @@ while [ "$taskStatus" == "WAITING" -o "$taskStatus" == "PROCESSING" ]
 			echo "------------------------------------------------"
                         
                 	echo "Job run successfully completed"
-                        exit 1
+                        exit 0
 
                 fi
 	done
